@@ -11,7 +11,7 @@ class ServiceContainer implements ServiceContainerInterface
      * ServiceContainer constructor
      * @param $container
      */
-    public function __constructor()
+    public function __construct()
     {
         $this->container = new Container();
     }
