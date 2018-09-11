@@ -2,7 +2,6 @@
 namespace SONFin;
 
 use Xtreamwayz\Pimple\Container;
-
 class ServiceContainer implements ServiceContainerInterface
 {
     private $container;
