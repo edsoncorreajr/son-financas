@@ -31,7 +31,7 @@ class DefaultRepository implements RepositoryInterface
         return $this->model->all()->toArray(); // eloquent retorna um Colletion
     }
 
-    public function create(array $data): Model
+    public function create(array $data)
     {
         $this->model->fill($data);
         $this->model->save();
@@ -39,7 +39,7 @@ class DefaultRepository implements RepositoryInterface
         return $this->model;
     }
 
-    public function update(int $id, array $data): Model
+    public function update(int $id, array $data)
     {
         $model = $this->find($id);
         $model->fill($data);

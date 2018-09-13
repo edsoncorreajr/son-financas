@@ -20,6 +20,7 @@ $app->plugin(new ViewPlugin());
 $app->plugin(new DbPlugin());
 
 require_once __DIR__ . '/../src/Controllers/CategoryCost.php';
+require_once __DIR__ . '/../src/Controllers/Users.php';
 
 /* $app->get('/', function (RequestInterface $request) {
     var_dump($request->getUri());

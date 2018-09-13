@@ -4,7 +4,7 @@ namespace SONFin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Users extends Model
+class User extends Model
 {
     protected $fillable = [
         'first_name',
@@ -12,5 +12,4 @@ class Users extends Model
         'email',
         'password'
     ];
-    
 }

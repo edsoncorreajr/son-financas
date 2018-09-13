@@ -7,6 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use SONFin\Repository\RepositoryFactory;
 use Interop\Container\ContainerInterface;
 use SONFin\Models\CategoryCost;
+use SONFin\Models\User;
 
 class DbPlugin implements PluginInterface
 {
@@ -22,6 +23,12 @@ class DbPlugin implements PluginInterface
         $container->addLazy(
             'category-cost.repository', function (ContainerInterface $container) {
                 return $container->get('repository.factory')->factory(CategoryCost::class);
+            }
+        );
+        $container->addLazy(
+            'user.repository',
+            function (ContainerInterface $container) {
+                return $container->get('repository.factory')->factory(User::class);
             }
         );
     }
