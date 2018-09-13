@@ -12,24 +12,27 @@ $app->get(
         $view = $app->service('view.renderer');
         return $view->render('teste.html.twig', ['name' => 'Edson CJR']);
     }
-);
+)
+->get(
+    '/category-costs',
+    function () use ($app) {
+        $view = $app->service('view.renderer');
+        $repository = $app->service('category-cost.repository');
 
-$app
-    ->get(
-        '/category-costs',
-        function () use ($app) {
-            $view = $app->service('view.renderer');
-            $categoryModel = new CategoryCost();
-            $categorias = $categoryModel->all();
-            return $view->render(
-                'category-costs/list.html.twig',
-                [
+        /*
+        $categoryModel = new CategoryCost();
+        $categorias = $categoryModel->all();
+         */
+        $categorias = $repository->all();
+        return $view->render(
+            'category-costs/list.html.twig',
+            [
                     'categorias' => $categorias
                 ]
-            );
-        },
-        'category-costs.list'
-    )
+        );
+    },
+    'category-costs.list'
+)
     ->get(
         '/category-costs/new',
         function () use ($app) {
@@ -46,7 +49,9 @@ $app
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
             $id = $request->getAttribute('id');
-            $category = CategoryCost::findOrFail($id);
+            $repository = $app->service('category-cost.repository');
+
+            $category = $repository->find($id);
 
             return $view->render(
                 'category-costs/edit.html.twig',
@@ -62,7 +67,9 @@ $app
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
             $id = $request->getAttribute('id');
-            $category = CategoryCost::findOrFail($id);
+            $repository = $app->service('category-cost.repository');
+
+            $category = $repository->find($id);
 
             return $view->render(
                 'category-costs/show.html.twig',
@@ -78,17 +85,20 @@ $app
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
             $id = $request->getAttribute('id');
+            $repository = $app->service('category-cost.repository');
+
 
             /**
              * @var CategoryCost $category
              */
-            $category = CategoryCost::findOrFail($id);
+            $category = $repository->find($id);
             $data = $request->getParsedBody();
-
-            $category->fill($data); // atualiza a consulta com o dado form - atribuição massiva
-
-            $category->save();
-
+            /*
+                        $category->fill($data); // atualiza a consulta com o dado form - atribuição massiva
+            
+                        $category->save();
+             */
+            $repository->update($id, $data);
             return $app->route('category-costs.list');
         },
         'category-costs.update'
@@ -98,11 +108,13 @@ $app
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
             $id = $request->getAttribute('id');
+            $repository = $app->service('category-cost.repository');
+
 
             /**
              * @var CategoryCost $category
              */
-            $category = CategoryCost::findOrFail($id);
+            $category = $repository->find($id);
             $category->delete();
 
             return $app->route('category-costs.list');
@@ -116,7 +128,9 @@ $app
 
 
             $data = $request->getParsedBody();
-            CategoryCost::create($data);
+            $repository = $app->service('category-cost.repository');
+
+            $repository->create($data);
             //após inserir redireciona para a pagina de lista categorias
             return $app->route('category-costs.list');
         },
