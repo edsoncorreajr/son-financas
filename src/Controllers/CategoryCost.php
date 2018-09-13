@@ -91,7 +91,6 @@ $app->get(
             /**
              * @var CategoryCost $category
              */
-            $category = $repository->find($id);
             $data = $request->getParsedBody();
             /*
                         $category->fill($data); // atualiza a consulta com o dado form - atribuição massiva

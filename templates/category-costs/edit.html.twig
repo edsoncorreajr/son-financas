@@ -6,19 +6,13 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        Editar Categoria de custo - ID {{ categoria.id }}
+                        Editar Categoria de custo
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <form action="{{ route('category-costs.update',{'id': categoria.id }) }}" method="post">
-                        <div class="form-group">
-                            <label class="control-label">Nome:</label>
-                            <input type="text" class="form-control" placeholder="Nome" name="name" value="{{ categoria.name }}">
-                        </div>
-                        <button class="btn btn-primary btn-block" type="submit">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>
-                        </button>
-                    </form>
+                    {% set action = route('category-costs.update', {'id': categoria.id}) %}
+                    {% set submitIcon = 'pencil' %}
+                    {% include 'category-costs/_form.html.twig' %}
                 </div>
             </div>
         </div>
