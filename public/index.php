@@ -5,6 +5,7 @@ use SONFin\Plugins\DbPlugin;
 use SONFin\ServiceContainer;
 use SONFin\Plugins\ViewPlugin;
 use SONFin\Plugins\RoutePlugin;
+use SONFin\Plugins\AuthPlugin;
 
 
 require_once __DIR__ . "/../vendor/autoload.php";
@@ -18,7 +19,9 @@ $app = new Application($serviceContainer);
 $app->plugin(new RoutePlugin());
 $app->plugin(new ViewPlugin());
 $app->plugin(new DbPlugin());
+$app->plugin(new AuthPlugin());
 
+require_once __DIR__ . '/../src/Controllers/Auth.php';
 require_once __DIR__ . '/../src/Controllers/CategoryCost.php';
 require_once __DIR__ . '/../src/Controllers/Users.php';
 

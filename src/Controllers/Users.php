@@ -1,5 +1,5 @@
 <?php
-
+declare (strict_types = 1);
 use Zend\Diactoros\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
