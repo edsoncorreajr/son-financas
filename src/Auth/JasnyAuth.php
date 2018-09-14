@@ -1,12 +1,10 @@
 <?php
-
 namespace SONFin\Auth;
 
 use Jasny\Auth\Sessions;
 use Jasny\Auth\User;
 
 use SONFin\Repository\RepositoryInterface;
-
 
 class JasnyAuth extends \Jasny\Auth
 {
@@ -25,10 +23,10 @@ class JasnyAuth extends \Jasny\Auth
     /**
      * Fetch a user by ID
      * 
-     * @param int $id
+     * @param  int $id
      * @return User
      */
-    public static function fetchUserById($id)
+    public function fetchUserById($id)
     {
         $this->repository->find($id, false);
     }
@@ -36,11 +34,11 @@ class JasnyAuth extends \Jasny\Auth
     /**
      * Fetch a user by username
      * 
-     * @param string $username
+     * @param  string $username
      * @return User
      */
-    public static function fetchUserByUsername($username)
+    public function fetchUserByUsername($username)
     {
-        return->repository->findByField('email', $username)[0];
+        return $repository->findByField('email', $username)[0];
     }
 }
