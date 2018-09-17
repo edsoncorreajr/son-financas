@@ -39,6 +39,6 @@ class JasnyAuth extends \Jasny\Auth
      */
     public function fetchUserByUsername($username)
     {
-        return $repository->findByField('email', $username)[0];
+        return $this->repository->findByField('email', $username)[0];
     }
 }

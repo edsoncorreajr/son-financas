@@ -6,6 +6,7 @@ use SONFin\View\ViewRenderer;
 use SONFin\Plugins\PluginInterface;
 use SONFin\ServiceContainerInterface;
 use Interop\Container\ContainerInterface;
+use SONFin\View\Twig\TwigGlobals;
 
 class ViewPlugin implements PluginInterface
 {
@@ -17,8 +18,18 @@ class ViewPlugin implements PluginInterface
                 $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../templates');
                 $twig = new \Twig_Environment($loader);
 
+                /** 
+                 * @var \SONFin\Auth\Auth
+                 */
+                $auth = $container->get('auth');
+
                 $generator = $container->get('routing.generator');
 
+                /** 
+                 * Adiciona a extensão personalisada no twig, a qual insere no template
+                 * uma varivel global, neste caso credenciais da autenticação
+                 */
+                $twig->addExtension(new TwigGlobals($auth));
                 $twig->addFunction(
                     new \Twig_SimpleFunction(
                         'route',

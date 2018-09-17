@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace SONFin\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use SONFin\Models\UserInterface;
 use Jasny\Auth\User as UserJasny;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Model implements UserJasny
+class User extends Model implements UserJasny, UserInterface
 {
     protected $fillable = [
         'first_name',
@@ -24,6 +25,22 @@ class User extends Model implements UserJasny
     public function getUsername(): string
     {
         return $this->email;
+    }
+
+    public function getFullname(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+
+    }
+
+    public function getEmail(): string
+    {
+return $this-email;
+    }
+
+    public function gePassword(): string
+    {
+return $this->password;
     }
 
     public function getHashedPassword(): string

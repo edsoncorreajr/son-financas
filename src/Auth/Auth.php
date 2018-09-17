@@ -2,9 +2,11 @@
 
 namespace SONFin\Auth;
 
+use SONFin\Models\UserInterface;
+
 class Auth implements AuthInterface
 {
-    /** 
+    /**
      * @var JasnyAuth
      */
     private $jasnyAuth;
@@ -12,6 +14,7 @@ class Auth implements AuthInterface
     public function __construct(JasnyAuth $jasnyAuth)
     {
         $this->jasnyAuth = $jasnyAuth;
+        $this->sessionStart();
     }
     public function login(array $credentials): bool
     {
@@ -29,8 +32,21 @@ class Auth implements AuthInterface
 
     public function check(): bool
     {
+        return $this->user() !== null;
     }
     public function logout(): void
     {
+    }
+
+    public function user(): ?UserInterface
+    {
+        return $this->jasnyAuth->user();
+    }
+
+    protected function sessionStart()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 }

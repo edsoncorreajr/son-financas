@@ -15,14 +15,16 @@ $app->get(
     ->post(
         '/login',
         function (ServerRequestInterface $request) use ($app) {
-            /* $view = $app->service('view.renderer');
-            $id = $request->getAttribute('id');
-            $repository = $app->service('user.repository');
+            $auth = $app->service('auth');
 
             $data = $request->getParsedBody();
+            $result = $auth->login($data);
+            $view = $app->service('view.renderer');
 
-            $repository->update($id, $data);
-            return $app->route('users.list'); */
+            if (!$result) {
+                return $view->render('auth/login.html.twig');
+            }
+            return $app->route('category-costs.list');
         },
         'auth.login'
     );
