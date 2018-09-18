@@ -19,7 +19,6 @@ class User extends Model implements UserJasny, UserInterface
     public function getId(): int
     {
         return (int) $this->id;
-        
     }
     
     public function getUsername(): string
@@ -30,17 +29,16 @@ class User extends Model implements UserJasny, UserInterface
     public function getFullname(): string
     {
         return "{$this->first_name} {$this->last_name}";
-
     }
 
     public function getEmail(): string
     {
-return $this-email;
+        return $this-email;
     }
 
     public function gePassword(): string
     {
-return $this->password;
+        return $this->password;
     }
 
     public function getHashedPassword(): string
@@ -50,14 +48,9 @@ return $this->password;
 
     public function onLogin()
     {
-        
     }
 
     public function onLogout()
     {
-        
     }
-
-
-
 }

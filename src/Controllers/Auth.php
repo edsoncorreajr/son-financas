@@ -10,7 +10,7 @@ $app->get(
         $view = $app->service('view.renderer');
         return $view->render('auth/login.html.twig');
     },
-    'auth.show_loginform'
+    'auth.show_login_form'
 )
     ->post(
         '/login',
@@ -27,4 +27,12 @@ $app->get(
             return $app->route('category-costs.list');
         },
         'auth.login'
+    )
+    ->get(
+        '/logout',
+        function (RequestInterface $request) use ($app) {
+            $app->service('auth')->logout();
+            return $app->route('auth.show_login_form');
+        },
+        'auth.logout'
     );

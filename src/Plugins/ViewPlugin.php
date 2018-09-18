@@ -18,9 +18,7 @@ class ViewPlugin implements PluginInterface
                 $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../templates');
                 $twig = new \Twig_Environment($loader);
 
-                /** 
-                 * @var \SONFin\Auth\Auth
-                 */
+               
                 $auth = $container->get('auth');
 
                 $generator = $container->get('routing.generator');

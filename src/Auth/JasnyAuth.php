@@ -23,19 +23,19 @@ class JasnyAuth extends \Jasny\Auth
     /**
      * Fetch a user by ID
      * 
-     * @param  int $id
-     * @return User
+     * @param  int|string $id
+     * @return User|null
      */
     public function fetchUserById($id)
     {
-        $this->repository->find($id, false);
+        return $this->repository->find($id, false);
     }
 
     /**
      * Fetch a user by username
      * 
      * @param  string $username
-     * @return User
+     * @return User|null
      */
     public function fetchUserByUsername($username)
     {

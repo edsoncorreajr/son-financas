@@ -32,7 +32,7 @@
                                 <a>Olá {{ Auth.user().fullname }}</a>
                             </li>
                             <li>
-                                <a href="#">Logout</a>
+                                <a href="{{ route('auth.logout') }}">Logout</a>
                             </li>
                         </ul>
                     </div>
