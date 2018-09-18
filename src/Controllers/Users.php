@@ -43,7 +43,7 @@ $app->get(
         '/users/{id}/edit',
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
-            $id = $request->getAttribute('id');
+            $id = (int) $request->getAttribute('id');
             $repository = $app->service('user.repository');
 
             $user = $repository->find($id);
@@ -61,7 +61,7 @@ $app->get(
         '/users/{id}/show',
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
-            $id = $request->getAttribute('id');
+            $id = (int) $request->getAttribute('id');
             $repository = $app->service('user.repository');
 
             $user = $repository->find($id);
@@ -79,7 +79,7 @@ $app->get(
         '/users/{id}/update',
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
-            $id = $request->getAttribute('id');
+            $id = (int) $request->getAttribute('id');
             $repository = $app->service('user.repository');
 
             $data = $request->getParsedBody();
@@ -93,7 +93,7 @@ $app->get(
         '/users/{id}/delete',
         function (ServerRequestInterface $request) use ($app) {
             $view = $app->service('view.renderer');
-            $id = $request->getAttribute('id');
+            $id = (int) $request->getAttribute('id');
             $repository = $app->service('user.repository');
 
 
