@@ -18,12 +18,13 @@ $app->get(
     function () use ($app) {
         $view = $app->service('view.renderer');
         $repository = $app->service('category-cost.repository');
+        $auth = $app->service('auth');
 
         /*
         $categoryModel = new CategoryCost();
         $categorias = $categoryModel->all();
          */
-        $categorias = $repository->all();
+        $categorias = $repository->findByField('user_id', $auth->user()->getId());
         return $view->render(
             'category-costs/list.html.twig',
             [
@@ -51,7 +52,14 @@ $app->get(
             $id = $request->getAttribute('id');
             $repository = $app->service('category-cost.repository');
 
-            $category = $repository->find($id);
+            $auth = $app->service('auth');
+            
+            $category = $repository->findOneBy(
+                [
+                'id' => $id,
+                'user_id' => $auth->user()->getId()
+                ]
+            );
 
             return $view->render(
                 'category-costs/edit.html.twig',
@@ -69,7 +77,14 @@ $app->get(
             $id = $request->getAttribute('id');
             $repository = $app->service('category-cost.repository');
 
-            $category = $repository->find($id);
+            $auth = $app->service('auth');
+            
+            $category = $repository->findOneBy(
+                [
+                'id' => $id,
+                'user_id' => $auth->user()->getId()
+                ]
+            );
 
             return $view->render(
                 'category-costs/show.html.twig',
@@ -94,10 +109,18 @@ $app->get(
             $data = $request->getParsedBody();
             /*
                         $category->fill($data); // atualiza a consulta com o dado form - atribuição massiva
-            
+
                         $category->save();
              */
-            $repository->update($id, $data);
+            $auth = $app->service('auth');
+            $data = $request->getParsedBody();
+            $data['user_id'] = $auth->user()->getId();
+            $repository->update(
+                [
+                'id' => $id,
+                'user_id' => $auth->user()->getId()
+                ], $data
+            );
             return $app->route('category-costs.list');
         },
         'category-costs.update'
@@ -105,16 +128,21 @@ $app->get(
     ->get(
         '/category-costs/{id}/delete',
         function (ServerRequestInterface $request) use ($app) {
+            
             $view = $app->service('view.renderer');
             $id = $request->getAttribute('id');
             $repository = $app->service('category-cost.repository');
 
-
+            $auth = $app->service('auth');
             /**
              * @var CategoryCost $category
              */
-            $category = $repository->find($id);
-            $category->delete();
+            $repository->delete(
+                [
+                'id' => $id,
+                'user_id' => $auth->user()->getId()
+                ]
+            );
 
             return $app->route('category-costs.list');
         },
@@ -125,8 +153,12 @@ $app->get(
         function (ServerRequestInterface $request) use ($app) {
             // cadastro de categorias
 
+            $auth = $app->service('auth');
 
             $data = $request->getParsedBody();
+            $data['user_id'] = $auth->user()->getId();
+
+
             $repository = $app->service('category-cost.repository');
 
             $repository->create($data);
